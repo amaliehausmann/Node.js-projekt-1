@@ -80,7 +80,7 @@ app.get('/albums', async (request, response) => {
     }
 })
 
-app.get('/test', async (req, res) => {
+app.get('/song', async (req, res) => {
     const data = await Song.getAllRecords()
     res.send(data)
 })
