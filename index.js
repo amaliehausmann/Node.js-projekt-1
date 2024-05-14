@@ -1,6 +1,9 @@
 import express from 'express'
 const app = express()
 import dotenv from 'dotenv';
+import Song from './models/song.model.js';
+import Artist from './models/artist.model.js';
+import Album from './models/album.model.js';
 
 dotenv.config();
 
@@ -76,6 +79,23 @@ app.get('/albums', async (request, response) => {
         response.send(data)
     }
 })
+
+app.get('/test', async (req, res) => {
+    const data = await Song.getAllRecords()
+    res.send(data)
+})
+
+app.get('/artist', async (req, res) => {
+    const data = await Artist.getAllArtists()
+    res.send(data)
+})
+
+app.get('/album', async (req, res) => {
+    const data = await Album.getAllAlbums()
+    res.send(data)
+})
+
+
 
 // error handling
 app.get('*', (request, response) => {
