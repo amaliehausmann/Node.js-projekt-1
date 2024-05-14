@@ -1,7 +1,5 @@
 import express from 'express'
 const app = express()
-const port = 3000;
-
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -38,10 +36,6 @@ app.get('/Contact', (request, response) => {
     response.send('Kontakt side');
 })
 
-// error handling
-app.get('*', (request, response) => {
-    response.status(404).send('404 - Siden blev ikke fundet');
-  });
 
 app.post('/', (request, response) => {
     response.send('Endpoint til POST')
@@ -50,4 +44,41 @@ app.post('/', (request, response) => {
 app.listen(port, () => {
     console.log('Webserver is running now on http://localhost:' + port);
 })
+
+import { supabase } from './config/supabase_config.js';
+
+app.get('/sange', async (request, response) => {
+
+    let { data, error } = await supabase.from('songs').select('id, title')
+    if (error) {
+        throw new Error(error.message);
+    } else {
+        response.send(data)
+    }
+})
+
+app.get('/artists', async (request, response) => {
+
+    let { data, error } = await supabase.from('artists').select('id, name, description, image, created_at, updated_at')
+    if (error) {
+        throw new Error(error.message);
+    } else {
+        response.send(data)
+    }
+})
+
+app.get('/albums', async (request, response) => {
+
+    let { data, error } = await supabase.from('albums').select('title, image, artists(name)')
+    if (error) {
+        throw new Error(error.message);
+    } else {
+        response.send(data)
+    }
+})
+
+// error handling
+app.get('*', (request, response) => {
+    response.status(404).send('404 - Siden blev ikke fundet');
+  });
 
