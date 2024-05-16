@@ -5,7 +5,7 @@ export default class Song {
         try {
             const { data, error } = await supabase
                 .from('songs')
-                .select('*')
+                .select('id, title, content, created_at, artists(name)')
                 if (error) {
                     throw new Error(error)
                 } else {
