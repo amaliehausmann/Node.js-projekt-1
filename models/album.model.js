@@ -5,7 +5,7 @@ export default class Album {
         try {
             const { data, error } = await supabase
             .from ('albums')
-            .select ('id, title, artists(name), release_date')
+            .select ('*')
             if (error) {
                 throw new Error(error)
             } else {
@@ -13,6 +13,23 @@ export default class Album {
             }
         } catch (error) {
             console.error('Fejl i kald af albumliste:'+ error)
+        }
+    }
+
+    static async getAlbumById(id) {
+        try {
+            const { data, error } = await supabase
+                .from('albums')
+                .select('*')
+                .eq('id', id)
+                .single()
+                if (error) {
+                    throw new Error(error)
+                } else {
+                    return data
+                }
+        } catch (error) {
+            console.error('Fejl i kald af album:'+ error)
         }
     }
 }

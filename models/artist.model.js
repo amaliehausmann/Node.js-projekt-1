@@ -5,7 +5,7 @@ export default class Artist {
        try {
         const { data, error } = await supabase
         .from ('artists')
-        .select ('id, name')
+        .select ('*')
         if (error) {
             throw new Error(error)
         } else {
@@ -14,5 +14,22 @@ export default class Artist {
        } catch (error) {
         console.error('Fejl i kald af artistliste:'+ error)
        } 
+    }
+
+    static async getArtistById(id) {
+        try {
+            const { data, error } = await supabase
+                .from('artists')
+                .select('*')
+                .eq('id', id)
+                .single()
+                if (error) {
+                    throw new Error(error)
+                } else {
+                    return data
+                }
+        } catch (error) {
+            console.error('Fejl i kald af kunstner:'+ error)
+        }
     }
 }
