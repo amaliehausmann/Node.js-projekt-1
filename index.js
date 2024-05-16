@@ -12,6 +12,8 @@ dotenv.config();
 const port = process.env.PORT_NUMBER;
 const app = express()
 
+app.use(express.urlencoded({ extended: true }));
+
 app.use(SongController)
 app.use(ArtistController)
 app.use(AlbumController)

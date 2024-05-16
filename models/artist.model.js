@@ -32,4 +32,26 @@ export default class Artist {
             console.error('Fejl i kald af kunstner:'+ error)
         }
     }
+
+    static async createArtist(formdata) {
+        try {
+            const { data, error } = await supabase
+                .from('artists')
+                .insert([
+                    {
+                        name: formdata.name,
+                        description: formdata.description,
+                        image: formdata.image,
+                    }
+                ])
+                .select('id')
+                if (error) {
+                    throw new Error(error)
+                } else {
+                    return data
+                }
+        } catch (error) {
+            console.error('Fejl i insert:'+ error)
+        }
+    }    
 }

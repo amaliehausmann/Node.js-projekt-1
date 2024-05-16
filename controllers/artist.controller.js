@@ -12,3 +12,8 @@ ArtistController.get('/artists/:id([0-9A-Za-z]*)', async (req, res) => {
     const single = await Artist.getArtistById(req.params.id);
     res.send(single)
  });
+
+ ArtistController.post('/artists', async (req, res) => {
+    const data = await Artist.createArtist(req.body)
+    res.send(data)
+});

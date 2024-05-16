@@ -32,4 +32,26 @@ export default class Song {
             console.error('Fejl i kald af sang:'+ error)
         }
     }
+
+    static async createRecord(formdata) {
+        try {
+            const { data, error } = await supabase
+                .from('songs')
+                .insert([
+                    {
+                        title: formdata.title,
+                        content: formdata.content,
+                        artist_id: formdata.artist_id,
+                    }
+                ])
+                .select('id')
+                if (error) {
+                    throw new Error(error)
+                } else {
+                    return data
+                }
+        } catch (error) {
+            console.error('Fejl i insert:'+ error)
+        }
+    }    
 }

@@ -32,4 +32,27 @@ export default class Album {
             console.error('Fejl i kald af album:'+ error)
         }
     }
+
+    static async createAlbum(formdata) {
+        try {
+            const { data, error } = await supabase
+                .from('albums')
+                .insert([
+                    {
+                        artist_id: formdata.artist_id,
+                        title: formdata.title,
+                        description: formdata.description,
+                        image: formdata.image,
+                    }
+                ])
+                .select('id')
+                if (error) {
+                    throw new Error(error)
+                } else {
+                    return data
+                }
+        } catch (error) {
+            console.error('Fejl i insert:'+ error)
+        }
+    }    
 }
